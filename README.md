@@ -1,4 +1,4 @@
-#Wise Aging Study
+#Working Memory Training Study
 
 This repository contains the experiments related to the Working Memory Training. 
 
