@@ -1,0 +1,29 @@
+/* Questionnaire */
+.q_title {
+    font-size: 24px;
+    background-color: #000000;
+}
+
+.q_dur {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #ff0000;
+}
+
+.q_para {
+    font-weight: bold;
+    text-align: center;
+}
+
+.q_keys_text {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.q_keys_word {
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    color: #f8952f;
+}
