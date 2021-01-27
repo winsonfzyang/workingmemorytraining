@@ -12,14 +12,14 @@ var n_back_instr_set = ["../img/WMT/intro1.jpg", "../img/WMT/intro2.jpg", "../im
 const nbackarray = [0, 1, 2, 3];
 const PERCENTCORRECTPRACT = 0.40;
 const PERCENTCORRECT = 0.20;
-const FIXATION_DURATION = 10; // 1000
-const PICTURE_DURATION = 20; // 2000
-const FDBCK_DUR = 10; // 1000
+const FIXATION_DURATION = 1000; // 1000
+const PICTURE_DURATION = 2000; // 2000
+const FDBCK_DUR = 1000; // 1000
 const BREAK_DUR = 50000; // 50 seconds break
 const NTRIALS = 20;
 const NTRIALSPRAC = 5;
 const NTESTINGBLOCKS = 1; // No. of blocks for pre/post-training test
-const NTRAININGBLOCKS = 8; // Need to change to 8
+const NTRAININGBLOCKS = 2; // Need to change to 8
 var HOWMANYBACK;
 var SEQLENGTH;
 var letter1;
@@ -51,37 +51,37 @@ var wmt_instrhelper = {};
 
 wmt_instrhelper.page1 =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instrsample.jpg' width='800'></p>" +
+    "<p><img src='../img/WMT/instrsample.jpg' alt='instrsample' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page2_1back =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instr1back.jpg' width='800'></p>" +
+    "<p><img src='../img/WMT/instr1back.jpg' alt='instr1back' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page2_2back =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instr2back.jpg' width='800'></p>" +
+    "<p><img src='../img/WMT/instr2back.jpg' alt='instr2back' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page2_3back =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instr3back.jpg' width='800'></p>" +
+    "<p><img src='../img/WMT/instr3back.jpg' alt='instr3back' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page2_4back =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instr4back.jpg' width='800'></p>" +
+    "<p><img src='../img/WMT/instr4back.jpg' alt='instr4back' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page3 =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instrpg2.jpg' width='800'></p>" +
+    "<p><img src='../img/WMT/instrpg2.jpg' alt='instrpg2' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page4 =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instrpg3.jpg' width='800'></p>" +
+    "<p><img src='../img/WMT/instrpg3.jpg' alt='instrpg3' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.conditional =
@@ -150,7 +150,7 @@ function makeNbackInstr() {
         Nbackinstr[i] = N_back_instr_i;
     }
     return Nbackinstr
-};
+}
 N_back_instr = makeNbackInstr();
 /* Fixation */
 var WMT_fixation = {
@@ -339,7 +339,7 @@ function makeNbackSeq(TYPE){
     }
 
     return n_back_sequences
-};
+}
 function createseqence(NBACK, TYPE){
     if (TYPE === 'practice'){
         SEQLENGTH = NTRIALSPRAC + NBACK;
@@ -405,7 +405,6 @@ var if_node = {
         } else {
             return true;
         }
-
     }
 };
 
