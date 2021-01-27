@@ -23,7 +23,7 @@ app.set('views', __dirname + '/public/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.post('/wmt-experiment-data', function(request, response) {
+app.post('/wmt-training-data', function(request, response) {
     console.log("Posting data")
     // Convert to CSV
     DATA_CSV = JSON2CSV(request.body);
