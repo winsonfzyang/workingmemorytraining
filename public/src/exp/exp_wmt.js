@@ -5,7 +5,8 @@
 // Set task variables
 var sequence = [];
 var fixation_stim = "<img class='center-fit' src='../img/WMT/cross.bmp'>"
-var n_back_set = ["../img/WMT/1f.bmp", "../img/WMT/2f.bmp", "../img/WMT/3f.bmp", "../img/WMT/4f.bmp"];
+var n_back_set = ["../img/WMT/1f.bmp", "../img/WMT/2f.bmp", "../img/WMT/3f.bmp", "../img/WMT/4f.bmp",
+    "../img/WMT/5f.bmp", "../img/WMT/6f.bmp", "../img/WMT/7f.bmp", "../img/WMT/8f.bmp"];
 var n_back_instr_set = ["../img/WMT/intro1.jpg", "../img/WMT/intro2.jpg", "../img/WMT/intro3.jpg", "../img/WMT/intro4.jpg"];
 
 // Constants
@@ -19,7 +20,7 @@ const BREAK_DUR = 50000; // 50 seconds break
 const NTRIALS = 20;
 const NTRIALSPRAC = 5;
 const NTESTINGBLOCKS = 1; // No. of blocks for pre/post-training test
-const NTRAININGBLOCKS = 2; // Need to change to 8
+const NTRAININGBLOCKS = 8; // Need to change to 8
 var HOWMANYBACK;
 var SEQLENGTH;
 var letter1;
