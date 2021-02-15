@@ -78,9 +78,9 @@ var welcome_screen = {
     on_trial_start: function() { setTimeout(function() {setDisplay("jspsych-btn","")}, 1000)},
     stimulus: "Welcome to the experiment.",
 };
-
 welcome_block = [];
 welcome_block.push(welcome_screen);
+
 
 // Set up full screen mode
 // bc_exp.push({type: 'fullscreen', fullscreen_mode: true}); /* enter fullscreen mode */
@@ -153,8 +153,8 @@ function start_RWMT_PreTest() {
 
         timeline: [
             ...welcome_block,
-            ...conditional_block,
-            ...rwmt_test_block
+            ...rwmt_test_block,
+            ...stroop_block
         ],
 
         /* on_close currently not working */
@@ -178,8 +178,8 @@ function start_CWMT_PreTest() {
 
         timeline: [
             ...welcome_block,
-            ...conditional_block,
-            ...cwmt_test_block
+            ...cwmt_test_block,
+            ...stroop_block
         ],
 
         /* on_close currently not working */
@@ -205,7 +205,8 @@ function start_RWMT_PostTest() {
 
         timeline: [
             ...welcome_block,
-            ...rwmt_test_block
+            ...rwmt_test_block,
+            ...stroop_block
         ],
 
         /* on_close currently not working */
@@ -229,7 +230,8 @@ function start_CWMT_PostTest() {
 
         timeline: [
             ...welcome_block,
-            ...cwmt_test_block
+            ...cwmt_test_block,
+            ...stroop_block
         ],
 
         /* on_close currently not working */
@@ -239,5 +241,24 @@ function start_CWMT_PostTest() {
         on_finish: function() {
             FinishTestingSave()
         }
+    });
+}
+
+// For fMRI-Practice
+function start_practice() {
+
+    /* start the experiment */
+    jsPsych.init({
+        show_progress_bar: false,
+        on_interaction_data_update: function(data) {
+            trial = jsPsych.currentTrial();
+            trial.data.screen_focus = data.event;
+        },
+
+        timeline: [
+            ...welcome_block,
+            ...conditional_practice
+        ],
+
     });
 }

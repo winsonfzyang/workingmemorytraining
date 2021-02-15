@@ -4,22 +4,23 @@
 
 // Set task variables
 var sequence = [];
-var fixation_stim = "<img class='center-fit' src='../img/WMT/cross.bmp'>"
+var wmt_fixation_stim = "<img class='center-fit' src='../img/WMT/cross.bmp'>"
 var n_back_set = ["../img/WMT/1f.bmp", "../img/WMT/2f.bmp", "../img/WMT/3f.bmp", "../img/WMT/4f.bmp",
     "../img/WMT/5f.bmp", "../img/WMT/6f.bmp", "../img/WMT/7f.bmp", "../img/WMT/8f.bmp"];
-var n_back_instr_set = ["../img/WMT/intro1.jpg", "../img/WMT/intro2.jpg", "../img/WMT/intro3.jpg", "../img/WMT/intro4.jpg"];
+var n_back_instr_set = ["../img/WMT/intro1.bmp", "../img/WMT/intro2.bmp", "../img/WMT/intro3.bmp", "../img/WMT/intro4.bmp"];
 
 // Constants
-const nbackarray = [0, 1, 2, 3];
+const nbackarray14 = [0, 1, 2, 3];
+const nbackarray13 = [0, 1, 2];
 const PERCENTCORRECTPRACT = 0.40;
-const PERCENTCORRECT = 0.20;
+const PERCENTCORRECT = 0.30;
 const FIXATION_DURATION = 1000; // 1000
 const PICTURE_DURATION = 2000; // 2000
 const FDBCK_DUR = 1000; // 1000
 const BREAK_DUR = 50000; // 50 seconds break
-const NTRIALS = 20;
-const NTRIALSPRAC = 5;
-const NTESTINGBLOCKS = 1; // No. of blocks for pre/post-training test
+const NTRIALS = 20; // 20 trials
+const NTRIALSPRAC = 5; // five practice trials
+const NTESTINGBLOCKS = 3; // No. of blocks for pre/post-training test
 const NTRAININGBLOCKS = 8; // Need to change to 8
 var HOWMANYBACK;
 var SEQLENGTH;
@@ -50,39 +51,43 @@ function permutator(inputArr) {
 // Set instructions helpers
 var wmt_instrhelper = {};
 
-wmt_instrhelper.page1 =
+wmt_instrhelper.page1a =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instrsample.jpg' alt='instrsample' width='800'></p>" +
+    "<p><img src='../img/WMT/nbackkeys.bmp' alt='nbackkeys' width='800'></p>" +
+    "</div>";
+wmt_instrhelper.page1b =
+    "<div class='WMT_instr'>" +
+    "<p><img src='../img/WMT/instrsample.bmp' alt='instrsample' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page2_1back =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instr1back.jpg' alt='instr1back' width='800'></p>" +
+    "<p><img src='../img/WMT/instr1back.bmp' alt='instr1back' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page2_2back =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instr2back.jpg' alt='instr2back' width='800'></p>" +
+    "<p><img src='../img/WMT/instr2back.bmp' alt='instr2back' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page2_3back =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instr3back.jpg' alt='instr3back' width='800'></p>" +
+    "<p><img src='../img/WMT/instr3back.bmp' alt='instr3back' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page2_4back =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instr4back.jpg' alt='instr4back' width='800'></p>" +
+    "<p><img src='../img/WMT/instr4back.bmp' alt='instr4back' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page3 =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instrpg2.jpg' alt='instrpg2' width='800'></p>" +
+    "<p><img src='../img/WMT/instrpg2.bmp' alt='instrpg2' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.page4 =
     "<div class='WMT_instr'>" +
-    "<p><img src='../img/WMT/instrpg3.jpg' alt='instrpg3' width='800'></p>" +
+    "<p><img src='../img/WMT/instrpg3.bmp' alt='instrpg3' width='800'></p>" +
     "</div>";
 
 wmt_instrhelper.conditional =
@@ -127,7 +132,7 @@ var wmt_instr = {
     },
     pages: [
         // Page 1
-        wmt_instrhelper.page1,
+        wmt_instrhelper.page1a, wmt_instrhelper.page1b,
         wmt_instrhelper.page2_1back, wmt_instrhelper.page2_2back, wmt_instrhelper.page2_3back,  wmt_instrhelper.page2_4back,
         wmt_instrhelper.page3,
         wmt_instrhelper.page4,
@@ -157,7 +162,7 @@ N_back_instr = makeNbackInstr();
 var WMT_fixation = {
     type: "html-keyboard-response",
     data: {exp_id: "WMT", trial_id: "fixation", stimulus: "fixation"},
-    stimulus: fixation_stim,
+    stimulus: wmt_fixation_stim,
     choices: jsPsych.NO_KEYS,
     trial_duration: FIXATION_DURATION, // milliseconds
 };
@@ -344,12 +349,12 @@ function makeNbackSeq(TYPE){
 function createseqence(NBACK, TYPE){
     if (TYPE === 'practice'){
         SEQLENGTH = NTRIALSPRAC + NBACK;
-        NMATCHTRIALS = PERCENTCORRECTPRACT*NTRIALSPRAC
-        NNONMATCHTRIALS = NTRIALSPRAC - NMATCHTRIALS
+        NMATCHTRIALS = PERCENTCORRECTPRACT*NTRIALSPRAC;
+        NNONMATCHTRIALS = NTRIALSPRAC - NMATCHTRIALS;
     } else if (TYPE === 'exp') {
         SEQLENGTH = NTRIALS + NBACK;
-        NMATCHTRIALS = PERCENTCORRECT*NTRIALS
-        NNONMATCHTRIALS = NTRIALS - NMATCHTRIALS
+        NMATCHTRIALS = PERCENTCORRECT*NTRIALS;
+        NNONMATCHTRIALS = NTRIALS - NMATCHTRIALS;
     }
 
     FIRSTNTRIALS = NBACK
@@ -391,6 +396,18 @@ for (var i = 0; i <= 3; ++i) {
     wmt_prac_block.push(overallfeedback);
 }
 
+// define ending message trial
+var ending_screen = {
+    type: "html-button-response",
+    data: {
+        exp_id: "ending",
+        trial_id: "ending"
+    },
+    choices: ['Click here to continue'],
+    on_trial_start: function() { setTimeout(function() {setDisplay("jspsych-btn","")}, 1000)},
+    stimulus: "Practice session has ended. Please notify the experimenter!",
+};
+
 // Transition and condition to practice again or proceeed to experiment
 var pre_if_trial = {
     type: 'html-keyboard-response',
@@ -413,16 +430,21 @@ var conditional_block = [];
 conditional_block.push(if_node);
 conditional_block.push(wmt_transition);
 
+var conditional_practice = [];
+conditional_practice.push(if_node);
+conditional_practice.push(ending_screen);
+
+
 // Real WMT blocks
-function wmtblock(WMTTYPE, TESTTYPE){
+function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
     exp_block = [];
-    allpermutes = permutator(nbackarray);
+    allpermutes = permutator(NBACKARRAY);
     possiblepermutes = allpermutes.length;
 
     if (WMTTYPE === "c-wmt"){
-        allbackarray = Array(possiblepermutes).fill(nbackarray)
+        allbackarray = Array(possiblepermutes).fill(NBACKARRAY)
     } else if (WMTTYPE === "r-wmt"){
-        allbackarray = permutator(nbackarray);
+        allbackarray = permutator(NBACKARRAY);
     }
 
     if (TESTTYPE === "training"){NBLOCKS = NTRAININGBLOCKS}
@@ -435,7 +457,7 @@ function wmtblock(WMTTYPE, TESTTYPE){
         targetindex = allbackarray[nbackindex]
         allbackarray.splice(nbackindex, 1);
 
-        for (var i = 0; i <= 3; ++i) {
+        for (var i = 0; i <= (NBACKARRAY.length -1); ++i) {
             nbacktest_i = targetindex[i]
             exp_block.push(N_back_instr[nbacktest_i]);
             exp_block.push(n_back_sequences_exp[nbacktest_i]);
@@ -451,9 +473,9 @@ function wmtblock(WMTTYPE, TESTTYPE){
     return exp_block
 }
 
-rwmt_exp_block = wmtblock('r-wmt', 'training')
-cwmt_exp_block = wmtblock('c-wmt', 'training')
+rwmt_exp_block = wmtblock('r-wmt', 'training', nbackarray14)
+cwmt_exp_block = wmtblock('c-wmt', 'training', nbackarray14)
 
 // Pre-Test block
-rwmt_test_block = wmtblock('r-wmt', 'testing')
-cwmt_test_block = wmtblock('c-wmt', 'testing')
+rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray13)
+cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray13)

@@ -46,7 +46,6 @@ welcome.click.consent = function() {
     welcome.helpers.setHeader(' ');
 };
 welcome.click.demographics = function() {
-
     daynumber = welcome.helpers.getRadioButton("day");
     partAB = welcome.helpers.getRadioButton("partnumber");
     lastDigit = document.getElementById("partID").value;
@@ -81,24 +80,38 @@ welcome.click.demographics = function() {
         });
         // start the jsPsych experiment
         if (daynumber == "Pre-test") {
-            jsPsych.data.addProperties({ wmt_condition: wmt_condition});
-           if (partAB === "A") {
-               if (wmt_condition[0] === "r-wmt"){start_RWMT_PreTest(); jsPsych.data.addProperties({wmttype: "r-wmt"});}
-               if (wmt_condition[0] === "c-wmt"){start_CWMT_PreTest(); jsPsych.data.addProperties({wmttype: "c-wmt"});}
-           } else {
-               if (wmt_condition[1] === "r-wmt"){start_RWMT_PreTest(); jsPsych.data.addProperties({wmttype: "r-wmt"});}
-               if (wmt_condition[1] === "c-wmt"){start_CWMT_PreTest(); jsPsych.data.addProperties({wmttype: "c-wmt"});}
-           }
+            // jsPsych.data.addProperties({ wmt_condition: wmt_condition});
+            // if (partAB === "A") {
+            //     if (wmt_condition[0] === "r-wmt"){jsPsych.data.addProperties({wmttype: "r-wmt"}); start_RWMT_PreTest();}
+            //     if (wmt_condition[0] === "c-wmt"){jsPsych.data.addProperties({wmttype: "c-wmt"}); start_CWMT_PreTest();}
+            // } else {
+            //     if (wmt_condition[1] === "r-wmt"){jsPsych.data.addProperties({wmttype: "r-wmt"}); start_RWMT_PreTest();}
+            //     if (wmt_condition[1] === "c-wmt"){jsPsych.data.addProperties({wmttype: "c-wmt"}); start_CWMT_PreTest();}
+            // }
+            if (partAB === "C-WMT") {
+                jsPsych.data.addProperties({wmttype: "c-wmt"});
+                start_CWMT_PreTest();
+            } else {
+                jsPsych.data.addProperties({wmttype: "r-wmt"});
+                start_RWMT_PreTest();
+            }
         }
         if (daynumber == "Post-test") {
-            wmt_condition = wmt_condition.reverse();
-            jsPsych.data.addProperties({ wmt_condition: wmt_condition});
-            if (partAB === "A") {
-                if (wmt_condition[0] === "r-wmt"){start_RWMT_PostTest(); jsPsych.data.addProperties({wmttype: "r-wmt"});}
-                if (wmt_condition[0] === "c-wmt"){start_CWMT_PostTest(); jsPsych.data.addProperties({wmttype: "c-wmt"});}
+            // wmt_condition = wmt_condition.reverse();
+            // jsPsych.data.addProperties({ wmt_condition: wmt_condition});
+            // if (partAB === "A") {
+            //     if (wmt_condition[0] === "r-wmt"){jsPsych.data.addProperties({wmttype: "r-wmt"}); start_RWMT_PostTest();}
+            //     if (wmt_condition[0] === "c-wmt"){jsPsych.data.addProperties({wmttype: "c-wmt"}); start_CWMT_PostTest();}
+            // } else {
+            //     if (wmt_condition[1] === "r-wmt"){jsPsych.data.addProperties({wmttype: "r-wmt"}); start_RWMT_PostTest(); }
+            //     if (wmt_condition[1] === "c-wmt"){jsPsych.data.addProperties({wmttype: "c-wmt"}); start_CWMT_PostTest();}
+            // }
+            if (partAB === "C-WMT") {
+                jsPsych.data.addProperties({wmttype: "c-wmt"});
+                start_CWMT_PostTest();
             } else {
-                if (wmt_condition[1] === "r-wmt"){start_RWMT_PostTest(); jsPsych.data.addProperties({wmttype: "r-wmt"});}
-                if (wmt_condition[1] === "c-wmt"){start_CWMT_PostTest(); jsPsych.data.addProperties({wmttype: "c-wmt"});}
+                jsPsych.data.addProperties({wmttype: "r-wmt"});
+                start_RWMT_PostTest();
             }
         }
     }
@@ -151,8 +164,8 @@ welcome.section.demographics =
     '           <br/><br/>' +
     '			<!-- Testing Part A or B -->' +
     '           <label for="partnumber"><b>Part: &nbsp;</b></label>' +
-    '           <input type="radio" name="partnumber" value="A" /> A &nbsp; ' +
-    '           <input type="radio" name="partnumber" value="B" /> B &nbsp;' +
+    '           <input type="radio" name="partnumber" value="C-WMT" /> C-WMT &nbsp; ' +
+    '           <input type="radio" name="partnumber" value="R-WMT" /> R-WMT &nbsp;' +
     '		<br><br>' +
     '		<!-- Demographics  button -->' +
     '        <p align="center">' +
