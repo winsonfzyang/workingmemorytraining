@@ -19,8 +19,9 @@ const PICTURE_DURATION = 2000; // 2000
 const FDBCK_DUR = 1000; // 1000
 const BREAK_DUR = 50000; // 50 seconds break
 const NTRIALS = 20; // 20 trials
+const NTRIALSTEST = 40; // 20 trials
 const NTRIALSPRAC = 5; // five practice trials
-const NTESTINGBLOCKS = 3; // No. of blocks for pre/post-training test
+const NTESTINGBLOCKS = 2; // No. of blocks for pre/post-training test
 const NTRAININGBLOCKS = 8; // Need to change to 8
 var HOWMANYBACK;
 var SEQLENGTH;
@@ -355,6 +356,10 @@ function createseqence(NBACK, TYPE){
         SEQLENGTH = NTRIALS + NBACK;
         NMATCHTRIALS = PERCENTCORRECT*NTRIALS;
         NNONMATCHTRIALS = NTRIALS - NMATCHTRIALS;
+    } else if (TYPE === 'testing') {
+        SEQLENGTH = NTRIALSTEST + NBACK;
+        NMATCHTRIALS = PERCENTCORRECT*NTRIALSTEST;
+        NNONMATCHTRIALS = NTRIALSTEST - NMATCHTRIALS;
     }
 
     FIRSTNTRIALS = NBACK
@@ -365,7 +370,6 @@ function createseqence(NBACK, TYPE){
     unmatchtrials = Array(NNONMATCHTRIALS).fill({match: false, nback: NBACK, seqlen: SEQLENGTH, phase: TYPE});
 
     n_back_trials = matchtrials.concat(unmatchtrials);
-
     shuffle(n_back_trials);
 
     n_back_trials = firsttrials.concat(n_back_trials);
@@ -375,7 +379,7 @@ function createseqence(NBACK, TYPE){
             timeline_variables: n_back_trials,
         }
 
-    } else if (TYPE === 'exp') {
+    } else  {
         n_back_sequence = {
             timeline: [WMT_fixation, n_back_trial],
             timeline_variables: n_back_trials,
@@ -384,8 +388,17 @@ function createseqence(NBACK, TYPE){
 
     return n_back_sequence
 }
+function multipleseq(NREPS, TYPE){
+    sequence = [];
+    for (var i = 0; i < NREPS; ++i) {
+        sequence[i] = makeNbackSeq(TYPE);
+    }
+    return sequence
+}
+
 n_back_sequences_practice = makeNbackSeq('practice');
-n_back_sequences_exp = makeNbackSeq('exp');
+n_back_sequences_exp = multipleseq(NTRAININGBLOCKS, 'exp')
+n_back_sequences_testing = multipleseq(NTESTINGBLOCKS, 'testing')
 
 // Practice block
 var wmt_prac_block = [];
@@ -447,11 +460,11 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
         allbackarray = permutator(NBACKARRAY);
     }
 
-    if (TESTTYPE === "training"){NBLOCKS = NTRAININGBLOCKS}
-    if (TESTTYPE === "testing"){NBLOCKS = NTESTINGBLOCKS}
-
+    if (TESTTYPE === "training"){NBLOCKS = NTRAININGBLOCKS; n_back_sequences = n_back_sequences_exp}
+    if (TESTTYPE === "testing"){NBLOCKS = NTESTINGBLOCKS; n_back_sequences = n_back_sequences_testing}
 
     for (var x = 1; x <= NBLOCKS; ++x) {
+        n_back_sequences_i = n_back_sequences[x-1]
 
         nbackindex = Math.floor(Math.random() * allbackarray .length)
         targetindex = allbackarray[nbackindex]
@@ -460,7 +473,7 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
         for (var i = 0; i <= (NBACKARRAY.length -1); ++i) {
             nbacktest_i = targetindex[i]
             exp_block.push(N_back_instr[nbacktest_i]);
-            exp_block.push(n_back_sequences_exp[nbacktest_i]);
+            exp_block.push(n_back_sequences_i[nbacktest_i]);
         }
         // inter-
         if (TESTTYPE === "training"){
@@ -473,9 +486,10 @@ function wmtblock(WMTTYPE, TESTTYPE, NBACKARRAY){
     return exp_block
 }
 
+// Training block
 rwmt_exp_block = wmtblock('r-wmt', 'training', nbackarray14)
 cwmt_exp_block = wmtblock('c-wmt', 'training', nbackarray14)
 
-// Pre-Test block
+// Testing block
 rwmt_test_block = wmtblock('r-wmt', 'testing', nbackarray13)
 cwmt_test_block = wmtblock('c-wmt', 'testing', nbackarray13)
