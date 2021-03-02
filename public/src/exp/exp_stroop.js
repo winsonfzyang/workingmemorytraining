@@ -3,9 +3,9 @@
 /* ************************************ */
 
 // Constants
-const STROOP_FIXATION_DURATION = 500; // 500
-const STROOP_STIM_DURATION = 2000; // 2000
-const STROOP_POSTTRIAL_DURATION = 500; // 500
+const STROOP_FIXATION_DURATION = 1; // 500
+const STROOP_STIM_DURATION = 2; // 2000
+const STROOP_POSTTRIAL_DURATION = 1; // 500
 const STROOP_FDBCK_DURATION = 1000; // 1000
 const PERCENTINCONGR = 0.20; // 20%
 const NPRACTTRIALS = 10; // 1 set = 10 trials
